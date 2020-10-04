@@ -4,7 +4,7 @@ import requests, shutil, os, img2pdf
 def catch_chapter(start, end):
     for i in range(start, end+1):
         # enter manga page url: note the slash at the end of url
-        manga_url = "https://kissmanga.in/kissmanga/immortal-invincible-manga123/"
+        manga_url = "https://kissmanga.in/kissmanga/apotheosis/"
         url = manga_url +"chapter-"+str(i)+"/"
         page =  requests.get(url)
         soup = BeautifulSoup(page.content, 'lxml')
@@ -40,14 +40,14 @@ def catch_chapter(start, end):
         with open(chapter+".pdf","wb") as f:
             f.write(img2pdf.convert(images))
         print("downloaded: "+chapter)
-        
+
         #clean-up
         shutil.rmtree(chapter, ignore_errors=True)
 
 
 # enter starting and ending chapter number -> for 1 chapter  enter same value
-start = 1
-last = 108
+start = 200
+last = 200
 
 #call function for all chapters
 catch_chapter(start, last)
