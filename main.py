@@ -12,10 +12,12 @@ def catch_chapter(start, end):
         manga_name = soup.find("title").text.split('-')[0]
         if not os.path.exists(manga_name):
             os.mkdir(manga_name)
+
         #get pages of chapter
         for item in soup.findAll("img", {"class": "wp-manga-chapter-img"}):
             if(item.has_attr('src')):
                 pages.append(item['src'].strip())
+
         #download pages
         chapter = manga_name+"/"+url.split('/')[-2]
         if not os.path.exists(chapter):
@@ -32,11 +34,13 @@ def catch_chapter(start, end):
                     shutil.copyfileobj(r.raw, f)
             else:
                 None
+
         # store pages in pdf format
         pdf_name = chapter+".pdf"
         with open(chapter+".pdf","wb") as f:
             f.write(img2pdf.convert(images))
         print("downloaded: "+chapter)
+        
         #clean-up
         shutil.rmtree(chapter, ignore_errors=True)
 
@@ -44,5 +48,6 @@ def catch_chapter(start, end):
 # enter starting and ending chapter number -> for 1 chapter  enter same value
 start = 1
 last = 108
+
 #call function for all chapters
 catch_chapter(start, last)
